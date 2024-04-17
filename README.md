@@ -95,3 +95,11 @@ public class ExemploUso {
     }
 }
 ```
+
+## Postman
+
+Na pasta 'Postman' na raiz do projeto, você encontrará uma collection com todas as chamadas da API. Essa collection pode ser importada no Postman para facilitar o teste das chamadas.
+
+## Contribuindo
+
+Se você deseja contribuir com este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
