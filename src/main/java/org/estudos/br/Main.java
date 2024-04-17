@@ -7,13 +7,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bem-vindo à consulta de estados do IBGE!");
-        System.out.println("Digite a sigla de um estado para consultar suas informações:");
+        System.out.println("Digite a sigla de um (ou mais) estado(s) para consultar suas informações, separados por pipe '|': ");
 
         String uf = scanner.nextLine().toUpperCase();
 
         try {
             String resultado = ConsultaIBGE.consultarEstado(uf);
-            System.out.println("Resultado da consulta:");
+            System.out.println("Resultado da consulta: ");
             System.out.println(resultado);
         } catch (IOException e) {
             System.err.println("Ocorreu um erro ao realizar a consulta: " + e.getMessage());
