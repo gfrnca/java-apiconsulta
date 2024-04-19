@@ -9,23 +9,25 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConsultaIBGETest {
+    private static final String ESTADOS_API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
 
 
     @Test
-    @DisplayName("Pegando o Status Code")
-    public void testConsultarEstadoStatusCode() throws IOException {
+    @DisplayName("Teste para consulta única de um estado")
+    public void testConsultarEstado() throws IOException {
+        // Arrange
+        String uf = "SP"; // Define o estado a ser consultado
 
-        // Sigla do estado a ser consultado
-        String estadoUf = "SP";
+        // Act
+        String resposta = ConsultaIBGE.consultarEstado(uf); // Chama o método a ser testado
 
-        // Cria uma conexão HTTP com a URL da API do IBGE para consultar informações sobre o estado "SP" vindo da variável {estadoUf}
-        HttpURLConnection connection = (HttpURLConnection) new URL("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + estadoUf).openConnection();
-        // Define o método da requisição como GET
-        connection.setRequestMethod("GET");
-        // Obtém o status code da resposta da API
+        // Assert
+        // Verifica se a resposta não está vazia
+        assert !resposta.isEmpty();
+
+        // Verifica se o status code é 200 (OK)
+        HttpURLConnection connection = (HttpURLConnection) new URL(ESTADOS_API_URL + uf).openConnection();
         int statusCode = connection.getResponseCode();
-
-        // Verifica se o status code retornado é igual a 200 (OK) e dá uma msg de erro se não for
-        assertEquals(200, statusCode, "O status code da resposta não é 200.");
+        assertEquals(200, statusCode, "O status code da resposta da API deve ser 200 (OK)");
     }
 }
