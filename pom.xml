@@ -6,11 +6,11 @@
 
   <groupId>org.estudos.br</groupId>
   <artifactId>ConsultaIbge</artifactId>
-  <version>2.5-SNAPSHOT</version>
+  <version>3.0</version>
   <packaging>jar</packaging>
 
   <name>ConsultaIbge</name>
-  <url>http://www.example.com</url>
+  <url>https://github.com/PauloRobert/ApiConsultaIBGE</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
