@@ -78,4 +78,21 @@ public class ConsultaIBGE {
         // Retorna a resposta da API como uma string
         return response.toString();
     }
+
+    public static String getStateById(int identifier) throws IOException {
+        URL address = new URL(ESTADOS_API_URL + identifier);
+
+        HttpURLConnection connection = (HttpURLConnection) address.openConnection();
+        connection.setRequestMethod("GET");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String line;
+        StringBuilder response = new StringBuilder();
+
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
+        reader.close();
+
+        return response.toString();
+    }
 }
