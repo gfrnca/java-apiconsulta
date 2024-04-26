@@ -13,6 +13,8 @@ import static org.mockito.Mockito.when;
 
 public class ConsultaIBGETest {
     private static final String ESTADOS_API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
+    private static final String DISTRITOS_API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/distritos/";
+
 
 
     @Test
@@ -68,6 +70,20 @@ public class ConsultaIBGETest {
         String res = ConsultaIBGE.consultarDistrito(idToBeConsulted);
 
         assertEquals(res, consultedIdResponseJson);
+    }
+
+    @Test
+    @DisplayName("Teste para consulta de estado por ID")
+    public void testConsultStateById() throws IOException {
+        int stateId = 13; // AMAZONAS
+
+        String res = ConsultaIBGE.getStateById(stateId);
+        assert !res.isEmpty();
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(ESTADOS_API_URL + stateId).openConnection();
+        int statusCode = connection.getResponseCode();
+
+        assertEquals(200, statusCode, "O Status Code precisa ser 200");
     }
 
 }
