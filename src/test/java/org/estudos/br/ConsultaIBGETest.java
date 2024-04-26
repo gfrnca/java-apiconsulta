@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ConsultaIBGETest {
     private static final String ESTADOS_API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
@@ -48,6 +50,24 @@ public class ConsultaIBGETest {
         String stringfiedOutput = output.toString();
 
         assertTrue(stringfiedOutput.contains("Opção inválida."));
+    }
+
+    @Test
+    @DisplayName("Teste para consulta de distrito")
+    public void testDistrict() throws IOException {
+        int idToBeConsulted = 310010405;
+
+        String consultedIdResponseJson = "[{\"id\":310010405,\"nome\":\"Abadia dos Dourados\",\"municipio\":{\"id\":3100104,\"nome\":\"Abadia dos Dourados\",\"microrregiao\":{\"id\":31019,\"nome\":\"Patrocínio\",\"mesorregiao\":{\"id\":3105,\"nome\":\"Triângulo Mineiro/Alto Paranaíba\",\"UF\":{\"id\":31,\"sigla\":\"MG\",\"nome\":\"Minas Gerais\",\"regiao\":{\"id\":3,\"sigla\":\"SE\",\"nome\":\"Sudeste\"}}}},\"regiao-imediata\":{\"id\":310061,\"nome\":\"Monte Carmelo\",\"regiao-intermediaria\":{\"id\":3111,\"nome\":\"Uberlândia\",\"UF\":{\"id\":31,\"sigla\":\"MG\",\"nome\":\"Minas Gerais\",\"regiao\":{\"id\":3,\"sigla\":\"SE\",\"nome\":\"Sudeste\"}}}}}}]";
+
+        HttpURLConnection requestMockConnection = mock(HttpURLConnection.class);
+
+        when(requestMockConnection.getInputStream()).thenReturn(new ByteArrayInputStream(consultedIdResponseJson.getBytes()));
+
+        when(requestMockConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_OK);
+
+        String res = ConsultaIBGE.consultarDistrito(idToBeConsulted);
+
+        assertEquals(res, consultedIdResponseJson);
     }
 
 }
