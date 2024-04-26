@@ -3,10 +3,11 @@ package org.estudos.br;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConsultaIBGETest {
     private static final String ESTADOS_API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/";
@@ -30,4 +31,23 @@ public class ConsultaIBGETest {
         int statusCode = connection.getResponseCode();
         assertEquals(200, statusCode, "O status code da resposta da API deve ser 200 (OK)");
     }
+
+    @Test
+    @DisplayName("Teste para opção inválida no menu")
+    public void testInvalidOption() {
+        InputStream input = new ByteArrayInputStream("5".getBytes());
+
+        System.setIn(input);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        System.setOut(new PrintStream(output));
+
+        Main.main(new String[]{});
+
+        String stringfiedOutput = output.toString();
+
+        assertTrue(stringfiedOutput.contains("Opção inválida."));
+    }
+
 }
